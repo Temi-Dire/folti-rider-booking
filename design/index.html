@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folti Rider – Design options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Unbounded:wght@500;600&family=Onest:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ---------- page chrome (neutral, not part of the design) ---------- */
+:root { --page:#ECEAE6; --page-ink:#26231F; --page-muted:#6F6A62; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--page); color:var(--page-ink); font:15px/1.5 "Instrument Sans", system-ui, sans-serif; }
+.wrap { max-width:1440px; margin:0 auto; padding:32px 16px 80px; }
+header.top h1 { font:600 28px/1.15 "Bricolage Grotesque", sans-serif; }
+header.top p { color:var(--page-muted); max-width:70ch; margin-top:6px; }
+.tabs { display:flex; flex-wrap:wrap; gap:8px; margin:24px 0 8px; }
+.tabs button { font:inherit; font-weight:600; border:1px solid #CFCAC2; background:#fff; color:var(--page-ink); border-radius:999px; padding:9px 16px; cursor:pointer; }
+.tabs button[aria-selected="true"] { background:var(--page-ink); color:#fff; border-color:var(--page-ink); }
+.optinfo { background:#fff; border-radius:16px; padding:18px 20px; margin:16px 0 24px; display:grid; gap:14px; grid-template-columns:1.3fr 1fr; }
+.optinfo h2 { font:600 20px/1.2 "Bricolage Grotesque", sans-serif; }
+.optinfo p, .optinfo li { color:#4A453E; }
+.optinfo ul { padding-left:18px; }
+.swatches { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.sw { display:flex; align-items:center; gap:6px; font-size:12px; color:#4A453E; }
+.sw i { width:22px; height:22px; border-radius:6px; border:1px solid rgba(0,0,0,.1); display:block; }
+@media (max-width:800px){ .optinfo { grid-template-columns:1fr; } }
+.rail { display:flex; gap:28px; overflow-x:auto; padding:8px 4px 24px; scroll-snap-type:x mandatory; }
+.shot { flex:0 0 auto; scroll-snap-align:start; }
+.shot figcaption { font-size:13px; color:var(--page-muted); margin-top:10px; max-width:360px; }
+.shot figcaption b { color:var(--page-ink); }
+h3.sec { font:600 17px/1.2 "Bricolage Grotesque", sans-serif; margin:28px 0 12px; }
+.desk-holder { width:100%; overflow:hidden; border-radius:20px; }
+
+/* ---------- design themes ---------- */
+.theme-a { --land:#EADFCC; --land2:#E3D6C0; --water:#BCD3D2; --road:#F8F2E8; --road2:#F1E8DA; --park:#D8D8B8;
+  --glass:rgba(255,252,246,.78); --glass-solid:#FFFCF6; --ink:#1F1B16; --muted:#6E655A; --line:rgba(31,27,22,.10);
+  --accent:#F2C230; --on-accent:#1F1B16; --dusk:#4C4FA3; --dusk-soft:#E4E4F4; --go:#2E9466; --stop:#C2412D;
+  --sel-bg:#1F1B16; --sel-fg:#FFF8EA; --ticket-bg:#1F1B16; --ticket-fg:#FFF8EA; --ticket-muted:#B9AE9C;
+  --field:#FFFFFF; --chip:#F3ECE0; --blur:18px; --disp:"Bricolage Grotesque"; --body:"Instrument Sans"; --rad:26px; }
+.theme-b { --land:#191B26; --land2:#1E2130; --water:#0F1D2E; --road:#2A2D3D; --road2:#232634; --park:#1C2A26;
+  --glass:rgba(26,28,40,.80); --glass-solid:#1C1E2B; --ink:#F3EFE6; --muted:#9C99AA; --line:rgba(255,255,255,.10);
+  --accent:#F2C230; --on-accent:#17140E; --dusk:#9C9FF5; --dusk-soft:rgba(156,159,245,.16); --go:#56C795; --stop:#F07A63;
+  --sel-bg:#F2C230; --sel-fg:#17140E; --ticket-bg:#F6F0E2; --ticket-fg:#17140E; --ticket-muted:#6E675A;
+  --field:rgba(255,255,255,.06); --chip:rgba(255,255,255,.07); --blur:20px; --disp:"Unbounded"; --body:"Onest"; --rad:24px; }
+.theme-c { --land:#E7E7E4; --land2:#DEDEDA; --water:#CDD5DA; --road:#FFFFFF; --road2:#F2F2EF; --park:#D6DDD0;
+  --glass:#FFFFFF; --glass-solid:#FFFFFF; --ink:#0E0E0E; --muted:#6A6A6A; --line:#E3E3E0;
+  --accent:#F2C230; --on-accent:#0E0E0E; --dusk:#3B44C6; --dusk-soft:#E6E8FA; --go:#1F8A57; --stop:#C23A2B;
+  --sel-bg:#0E0E0E; --sel-fg:#FFFFFF; --ticket-bg:#0E0E0E; --ticket-fg:#FFFFFF; --ticket-muted:#A3A3A3;
+  --field:#F4F4F2; --chip:#F1F1EE; --blur:0px; --disp:"Schibsted Grotesk"; --body:"Schibsted Grotesk"; --rad:0px; }
+
+/* ---------- phone ---------- */
+.phone { width:360px; height:740px; border-radius:46px; padding:9px; background:#151412; box-shadow:0 30px 60px -30px rgba(0,0,0,.45); }
+.screen { position:relative; width:100%; height:100%; border-radius:38px; overflow:hidden; background:var(--land);
+  color:var(--ink); font-family:var(--body), system-ui, sans-serif; font-size:15px; line-height:1.45; }
+.screen svg.map { position:absolute; inset:0; width:100%; height:100%; }
+.status { position:absolute; top:0; left:0; right:0; height:44px; display:flex; justify-content:space-between; align-items:center;
+  padding:0 26px; font-size:13px; font-weight:600; z-index:3; color:var(--ink); }
+.status .isl { position:absolute; left:50%; top:9px; transform:translateX(-50%); width:96px; height:26px; background:#000; border-radius:20px; }
+.fab { position:absolute; top:52px; width:40px; height:40px; border-radius:50%; background:var(--glass-solid); display:grid; place-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,.12); z-index:3; color:var(--ink); }
+.fab.l { left:16px; } .fab.r { right:16px; }
+.sheet { position:absolute; left:8px; right:8px; bottom:8px; z-index:2; border-radius:var(--rad, 26px); background:var(--glass);
+  backdrop-filter:blur(var(--blur)) saturate(1.3); -webkit-backdrop-filter:blur(var(--blur)) saturate(1.3);
+  padding:10px 18px 18px; box-shadow:0 -8px 40px rgba(0,0,0,.14); display:flex; flex-direction:column; }
+.theme-a .sheet { border-radius:28px; } .theme-b .sheet { border-radius:28px; border:1px solid rgba(255,255,255,.06); }
+.grab { width:38px; height:4px; border-radius:4px; background:var(--line); margin:0 auto 10px; flex:none; }
+.theme-c .grab { display:none; }
+/* option C: full-page steps under a map peek */
+.theme-c .sheet { left:0; right:0; bottom:0; top:178px; border-radius:22px 22px 0 0; box-shadow:0 -1px 0 var(--line); padding:20px 20px 22px; }
+.theme-c .sheet.tall { top:118px; }
+
+.sh-head { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.back { width:34px; height:34px; border-radius:50%; background:var(--chip); display:grid; place-items:center; flex:none; color:var(--ink); }
+.theme-c .back { border-radius:10px; }
+.title { font-family:var(--disp), sans-serif; font-weight:600; font-size:23px; line-height:1.1; letter-spacing:-.01em; }
+.theme-b .title { font-size:19px; letter-spacing:0; }
+.theme-c .title { font-weight:800; font-size:26px; letter-spacing:-.02em; }
+.sub { color:var(--muted); font-size:13.5px; margin-top:2px; }
+.steps { display:flex; gap:4px; margin:0 0 14px; }
+.steps i { flex:1; height:3px; border-radius:3px; background:var(--line); }
+.steps i.on { background:var(--ink); }
+.theme-b .steps i.on { background:var(--accent); }
+.grow { flex:1; min-height:0; }
+
+/* inputs */
+.route { background:var(--field); border-radius:16px; border:1px solid var(--line); position:relative; }
+.theme-c .route { border-radius:4px; border:0; }
+.rrow { display:flex; align-items:center; gap:12px; padding:11px 54px 11px 14px; }
+.rrow + .rrow { border-top:1px solid var(--line); }
+.rrow small { display:block; color:var(--muted); font-size:12px; }
+.rrow b { font-weight:600; font-size:15px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dot { width:10px; height:10px; border-radius:50%; border:3px solid var(--ink); flex:none; }
+.sq { width:10px; height:10px; background:var(--ink); flex:none; border-radius:2px; }
+.swap { position:absolute; right:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%;
+  background:var(--glass-solid); border:1px solid var(--line); display:grid; place-items:center; color:var(--ink); }
+.seg { display:grid; grid-template-columns:1fr 1fr; background:var(--chip); border-radius:999px; padding:4px; margin-top:12px; }
+.theme-c .seg { border-radius:6px; }
+.seg span { text-align:center; padding:8px 0; border-radius:999px; font-weight:600; font-size:14px; color:var(--muted); display:flex; gap:6px; justify-content:center; align-items:center; }
+.theme-c .seg span { border-radius:4px; }
+.seg span.on { background:var(--glass-solid); color:var(--ink); box-shadow:0 1px 4px rgba(0,0,0,.08); }
+.seg span.on.later { background:var(--dusk); color:#fff; }
+.theme-b .seg span.on.later { color:#11121C; }
+.lbl { font-size:12.5px; color:var(--muted); margin:14px 0 6px; font-weight:500; }
+.days { display:flex; gap:6px; }
+.days span { flex:1; text-align:center; padding:7px 0; border-radius:14px; background:var(--chip); font-size:11.5px; color:var(--muted); }
+.theme-c .days span { border-radius:4px; }
+.days span b { display:block; font-family:var(--disp), sans-serif; font-size:17px; color:var(--ink); font-weight:600; }
+.days span.on { background:var(--dusk); color:rgba(255,255,255,.8); }
+.days span.on b { color:#fff; }
+.theme-b .days span.on, .theme-b .days span.on b { color:#11121C; }
+.times { display:flex; gap:6px; flex-wrap:wrap; }
+.times span { padding:7px 12px; border-radius:999px; background:var(--chip); font-weight:600; font-size:13.5px; }
+.theme-c .times span { border-radius:4px; }
+.times span.on { background:var(--dusk); color:#fff; } .theme-b .times span.on { color:#11121C; }
+.note { display:flex; gap:8px; align-items:flex-start; margin-top:12px; padding:10px 12px; border-radius:14px; background:var(--dusk-soft); color:var(--ink); font-size:13px; }
+.note svg { color:var(--dusk); flex:none; margin-top:1px; }
+.theme-c .note { border-radius:4px; }
+
+.btn { margin-top:14px; height:52px; border-radius:999px; background:var(--accent); color:var(--on-accent); font-weight:600; font-size:16px;
+  display:flex; align-items:center; justify-content:center; gap:8px; flex:none; }
+.theme-c .btn { border-radius:6px; background:var(--ink); color:#fff; }
+.theme-c .btn .pill { background:var(--accent); color:var(--ink); }
+.btn.ghost { background:transparent; color:var(--ink); border:1px solid var(--line); margin-top:8px; }
+.theme-c .btn.ghost { background:var(--chip); border:0; color:var(--ink); }
+.btn .pill { font-size:12.5px; padding:2px 8px; border-radius:999px; background:rgba(0,0,0,.1); }
+
+/* vehicles */
+.badge { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--dusk-soft); color:var(--dusk); }
+.theme-c .badge { border-radius:4px; }
+.vlist { display:flex; flex-direction:column; gap:8px; }
+.veh { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:18px; background:var(--field); border:1px solid var(--line); }
+.theme-c .veh { border-radius:6px; }
+.veh .img { width:70px; flex:none; }
+.veh .nm { font-weight:600; font-size:15.5px; display:flex; align-items:center; gap:6px; }
+.veh .nm small { font-weight:500; color:var(--muted); font-size:12.5px; display:inline-flex; gap:2px; align-items:center; }
+.veh .ft { font-size:12.5px; color:var(--muted); }
+.veh .pr { margin-left:auto; text-align:right; flex:none; }
+.veh .pr b { font-family:var(--disp), sans-serif; font-weight:600; font-size:17px; display:block; }
+.theme-b .veh .pr b { font-size:14.5px; }
+.veh .pr small { font-size:11.5px; color:var(--muted); }
+.veh.sel { background:var(--sel-bg); color:var(--sel-fg); border-color:transparent; }
+.veh.sel .ft, .veh.sel .pr small, .veh.sel .nm small { color:color-mix(in srgb, var(--sel-fg) 65%, transparent); }
+.theme-a .veh.sel .pr b { color:var(--accent); }
+.theme-c .veh.sel { box-shadow:inset 0 0 0 0 var(--accent); }
+.theme-c .veh.sel .pr b { background:var(--accent); color:var(--ink); padding:0 6px; border-radius:3px; }
+.veh.off { opacity:.55; }
+.veh.off .ft { color:var(--stop); font-weight:500; }
+.avail { font-size:12px; color:var(--go); font-weight:600; }
+.veh.sel .avail { color:color-mix(in srgb, var(--go) 60%, #fff); }
+.theme-b .veh.sel .avail { color:#0d5c39; }
+/* option B carousel */
+.carousel { display:flex; gap:10px; margin:0 -18px; padding:2px 18px 4px; overflow:hidden; }
+.vcard { flex:0 0 200px; border-radius:22px; padding:14px; background:var(--field); border:1px solid var(--line); }
+.vcard.sel { background:var(--sel-bg); color:var(--sel-fg); border-color:transparent; }
+.vcard .img { height:70px; display:flex; align-items:center; }
+.vcard .nm { font-family:var(--disp), sans-serif; font-weight:600; font-size:16px; margin-top:4px; }
+.vcard .meta { font-size:12.5px; opacity:.75; margin-top:2px; }
+.vcard .feats { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+.vcard .feats span { font-size:11.5px; padding:2px 8px; border-radius:999px; background:rgba(0,0,0,.08); }
+.theme-b .vcard:not(.sel) .feats span { background:rgba(255,255,255,.07); }
+.vcard .pr { font-family:var(--disp), sans-serif; font-weight:600; font-size:20px; margin-top:10px; }
+.vcard .pr small { font-family:var(--body), sans-serif; font-size:12px; font-weight:500; opacity:.7; }
+.dots-ind { display:flex; gap:5px; justify-content:center; margin-top:10px; }
+.dots-ind i { width:6px; height:6px; border-radius:6px; background:var(--line); } .dots-ind i.on { width:18px; background:var(--accent); }
+.vdetail { margin-top:12px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.vdetail div { background:var(--chip); border-radius:14px; padding:8px 10px; font-size:12px; color:var(--muted); }
+.vdetail b { display:block; color:var(--ink); font-size:14px; }
+
+/* passenger */
+.booker { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:14px; background:var(--chip); font-size:13.5px; margin-top:12px; }
+.theme-c .booker { border-radius:4px; }
+.av { width:30px; height:30px; border-radius:50%; background:var(--accent); color:var(--on-accent); display:grid; place-items:center; font-weight:700; font-size:12px; flex:none; }
+.av.r { background:var(--dusk); color:#fff; }
+.field { margin-top:10px; }
+.field label { display:block; font-size:12.5px; color:var(--muted); font-weight:500; margin-bottom:5px; }
+.field .in { height:46px; border-radius:14px; background:var(--field); border:1px solid var(--line); display:flex; align-items:center; padding:0 14px; font-weight:500; gap:10px; }
+.theme-c .field .in { border-radius:4px; border:0; }
+.field .in .cc { padding-right:10px; border-right:1px solid var(--line); color:var(--muted); }
+.field .in.focus { border:2px solid var(--ink); }
+.field .in.err { border:2px solid var(--stop); }
+.field .msg { color:var(--stop); font-size:12.5px; margin-top:5px; display:flex; gap:5px; align-items:center; }
+.toggle { display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:13.5px; }
+.sw-t { width:42px; height:26px; border-radius:999px; background:var(--go); position:relative; flex:none; }
+.sw-t::after { content:""; position:absolute; right:3px; top:3px; width:20px; height:20px; border-radius:50%; background:#fff; }
+
+/* ticket */
+.ticket { border-radius:22px; background:var(--ticket-bg); color:var(--ticket-fg); position:relative; overflow:hidden; }
+.theme-c .ticket { border-radius:6px; }
+.tband { background:var(--dusk); color:#fff; padding:8px 16px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:6px; }
+.theme-b .tband { color:#fff; background:#4C4FA3; }
+.tbody { padding:14px 16px; }
+.troute { display:grid; grid-template-columns:14px 1fr; column-gap:10px; row-gap:6px; align-items:center; }
+.troute .dot { border-color:var(--ticket-fg); } .troute .sq { background:var(--ticket-fg); }
+.troute b { font-weight:600; font-size:15px; }
+.troute small { display:block; font-size:12px; color:var(--ticket-muted); font-weight:400; }
+.vline { width:2px; height:14px; background:color-mix(in srgb, var(--ticket-fg) 25%, transparent); margin-left:4px; }
+.perf { position:relative; height:18px; }
+.perf::before { content:""; position:absolute; left:16px; right:16px; top:50%; border-top:2px dashed color-mix(in srgb, var(--ticket-fg) 22%, transparent); }
+.perf::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 0 50%, var(--hole) 9px, transparent 9.5px), radial-gradient(circle at 100% 50%, var(--hole) 9px, transparent 9.5px); }
+.trows { display:grid; grid-template-columns:auto 1fr; gap:7px 14px; padding:4px 16px 4px; font-size:13.5px; }
+.trows dt { color:var(--ticket-muted); }
+.trows dd { text-align:right; font-weight:600; }
+.trows dd small { display:block; font-weight:400; color:var(--ticket-muted); font-size:12px; }
+.tfare { display:flex; justify-content:space-between; align-items:flex-end; padding:12px 16px 16px; }
+.tfare small { color:var(--ticket-muted); font-size:12.5px; }
+.tfare b { font-family:var(--disp), sans-serif; font-size:30px; font-weight:600; line-height:1; color:var(--accent); }
+.theme-b .tfare b { color:var(--ticket-fg); font-size:24px; }
+.theme-c .tfare b { color:var(--ticket-bg); background:var(--accent); padding:3px 8px; border-radius:3px; font-weight:800; }
+.edits { display:flex; gap:6px; margin-top:10px; }
+.edits span { font-size:12.5px; font-weight:600; padding:6px 10px; border-radius:999px; background:var(--chip); display:inline-flex; gap:5px; align-items:center; }
+.theme-c .edits span { border-radius:4px; }
+
+/* confirmed */
+.okc { width:58px; height:58px; border-radius:50%; background:var(--go); color:#fff; display:grid; place-items:center; margin:4px 0 12px; }
+.ref { margin-top:14px; border-radius:18px; background:var(--ticket-bg); color:var(--ticket-fg); padding:12px 16px; display:flex; justify-content:space-between; align-items:center; }
+.theme-c .ref { border-radius:6px; }
+.ref small { color:var(--ticket-muted); font-size:12px; display:block; }
+.ref b { font-family:var(--disp), sans-serif; font-size:24px; font-weight:600; letter-spacing:.02em; }
+.theme-b .ref b { font-size:19px; }
+.copy { width:36px; height:36px; border-radius:50%; background:color-mix(in srgb, var(--ticket-fg) 12%, transparent); display:grid; place-items:center; }
+.tl { margin-top:14px; display:grid; grid-template-columns:20px 1fr; column-gap:10px; font-size:13.5px; }
+.tl .d { width:12px; height:12px; border-radius:50%; background:var(--line); margin:4px 0 0 4px; position:relative; }
+.tl .d.done { background:var(--go); }
+.tl .bar { width:2px; height:18px; background:var(--line); margin-left:9px; }
+.tl small { color:var(--muted); display:block; font-size:12px; }
+.empty { text-align:left; }
+.empty .ill { height:96px; border-radius:20px; background:var(--chip); display:grid; place-items:center; margin:4px 0 14px; color:var(--muted); }
+.theme-c .empty .ill { border-radius:6px; }
+
+/* map labels */
+.maplbl { font:600 10px/1 var(--body), sans-serif; fill:var(--muted); letter-spacing:.02em; }
+.pinlbl rect { fill:var(--glass-solid); }
+.pinlbl text { font:600 11px/1 var(--body), sans-serif; fill:var(--ink); }
+
+/* desktop */
+.desk { width:1280px; height:780px; transform-origin:0 0; border-radius:20px; overflow:hidden; position:relative; background:var(--land); color:var(--ink); font-family:var(--body), sans-serif; font-size:15px; line-height:1.45; }
+.desk svg.map { position:absolute; inset:0; width:100%; height:100%; }
+.desk .panel { position:absolute; left:24px; top:88px; bottom:24px; width:400px; border-radius:28px; background:var(--glass); backdrop-filter:blur(18px) saturate(1.3); padding:20px 22px; box-shadow:0 20px 50px -20px rgba(0,0,0,.3); display:flex; flex-direction:column; }
+.desk .side { position:absolute; right:24px; top:88px; width:330px; }
+.desk .nav { position:absolute; left:24px; right:24px; top:20px; height:52px; border-radius:999px; background:var(--glass); backdrop-filter:blur(18px); display:flex; align-items:center; padding:0 8px 0 20px; gap:18px; box-shadow:0 10px 30px -15px rgba(0,0,0,.25); }
+.desk .logo { font-family:var(--disp), sans-serif; font-weight:700; font-size:20px; display:flex; gap:8px; align-items:center; }
+.desk .logo i { width:22px; height:22px; border-radius:7px; background:var(--accent); display:block; }
+.desk .nav a { font-weight:500; color:var(--muted); font-size:14px; }
+.desk .nav a.on { color:var(--ink); }
+.desk .nav .me { margin-left:auto; display:flex; gap:8px; align-items:center; font-weight:600; font-size:14px; }
+.desk .mini { display:flex; gap:8px; margin-bottom:12px; }
+.desk .mini > div { flex:1; background:var(--field); border:1px solid var(--line); border-radius:14px; padding:8px 12px; font-size:12.5px; color:var(--muted); }
+.desk .mini b { display:block; color:var(--ink); font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Folti Rider: design options</h1>
+    <p>Static mockups to choose a direction before building. Same booking story in each option: Tolu books a scheduled Priority ride from Yaba to Lekki Phase 1 for their mum, Funke, on Friday at 6:00 AM. Scroll each row sideways to see every screen.</p>
+  </header>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <section id="info" class="optinfo"></section>
+  <h3 class="sec">Phone screens</h3>
+  <div class="rail" id="rail"></div>
+  <div id="deskwrap">
+    <h3 class="sec">Desktop</h3>
+    <div class="desk-holder" id="deskholder"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- icons (lucide-style paths) ---------- */
+const I = {
+  back:'<path d="m15 18-6-6 6-6"/>',
+  swap:'<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  users:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/>',
+  check:'<path d="m5 12 5 5L20 7"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/>',
+  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>',
+  menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+  locate:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7"/>',
+  alert:'<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>',
+  car:'<path d="M5 17h14M6 17l1.5-6h9L18 17"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/>',
+  msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
+};
+const ic = (n, s=18, w=2) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+
+/* vehicle illustration (side profile) */
+function carImg(kind, w=70){
+  const body = kind==='xl'
+    ? 'M6 40 L8 22 Q9 16 16 16 L74 16 Q82 16 86 22 L96 32 Q100 34 100 40 L100 44 L6 44 Z'
+    : kind==='premium'
+    ? 'M4 40 Q4 33 12 31 L28 27 L40 19 Q44 17 50 17 L68 17 Q74 17 79 21 L90 29 Q100 31 100 38 L100 44 L4 44 Z'
+    : 'M6 40 Q6 33 13 31 L26 28 L36 20 Q40 18 46 18 L66 18 Q72 18 76 22 L86 30 Q98 31 98 38 L98 44 L6 44 Z';
+  const tint = {basic:'#CFC6B8', priority:'#F2C230', premium:'#2B2A30', xl:'#8FA7B3'}[kind];
+  const glass = kind==='xl' ? '<path d="M14 20 h20 v10 h-22 z M38 20 h20 v10 h-20 z M62 20 h12 q4 0 7 4 l4 6 h-23 z" fill="#1d2329" opacity=".8"/>'
+    : '<path d="M40 22 q3-1 7-1 h8 v9 h-22 z M58 21 h8 q5 0 8 3 l6 6 h-22 z" fill="#1d2329" opacity=".8"/>';
+  return `<svg viewBox="0 0 104 54" width="${w}" aria-hidden="true"><ellipse cx="52" cy="49" rx="46" ry="3" fill="#000" opacity=".12"/><path d="${body}" fill="${tint}"/>${glass}<circle cx="26" cy="44" r="7" fill="#1b1b1b"/><circle cx="26" cy="44" r="3" fill="#9a9a9a"/><circle cx="78" cy="44" r="7" fill="#1b1b1b"/><circle cx="78" cy="44" r="3" fill="#9a9a9a"/></svg>`;
+}
+
+/* stylised Lagos map */
+function mapSvg(w, h, a, b, opts={}){
+  const ly = opts.lagoonY ?? h*0.30;
+  const water = `<path d="M0 ${ly-30} C ${w*.25} ${ly-60}, ${w*.45} ${ly+10}, ${w*.7} ${ly-20} S ${w} ${ly-10}, ${w} ${ly-30} L ${w} ${ly+50} C ${w*.75} ${ly+40}, ${w*.5} ${ly+80}, ${w*.25} ${ly+40} S 0 ${ly+60}, 0 ${ly+40} Z" fill="var(--water)"/>`;
+  const blocks = [];
+  for (let i=0;i<14;i++){ const x=(i*97)%w, y=(i*173)%h; blocks.push(`<rect x="${x}" y="${y}" width="${40+(i*13)%50}" height="${30+(i*7)%40}" rx="6" fill="var(--land2)"/>`); }
+  const parks = `<rect x="${w*.62}" y="${h*.08}" width="${w*.18}" height="${h*.07}" rx="12" fill="var(--park)"/><rect x="${w*.08}" y="${h*.55}" width="${w*.16}" height="${h*.06}" rx="12" fill="var(--park)"/>`;
+  const roads = [
+    `M ${w*.18} 0 C ${w*.2} ${h*.3}, ${w*.12} ${h*.6}, ${w*.22} ${h}`,
+    `M 0 ${h*.12} C ${w*.4} ${h*.1}, ${w*.6} ${h*.18}, ${w} ${h*.14}`,
+    `M ${w*.55} 0 C ${w*.5} ${h*.3}, ${w*.62} ${h*.6}, ${w*.58} ${h}`,
+    `M 0 ${h*.52} C ${w*.3} ${h*.48}, ${w*.7} ${h*.56}, ${w} ${h*.5}`,
+    `M ${w*.82} 0 C ${w*.86} ${h*.4}, ${w*.78} ${h*.7}, ${w*.9} ${h}`,
+    `M 0 ${h*.75} C ${w*.4} ${h*.72}, ${w*.6} ${h*.8}, ${w} ${h*.76}`,
+  ];
+  const r = roads.map((d,i)=>`<path d="${d}" stroke="var(--road)" stroke-width="${i%2?9:6}" fill="none" stroke-linecap="round"/>`).join('');
+  const minor = [`M ${w*.35} 0 L ${w*.4} ${h}`, `M 0 ${h*.35} L ${w} ${h*.4}`, `M ${w*.7} 0 L ${w*.66} ${h}`, `M 0 ${h*.9} L ${w} ${h*.86}`]
+    .map(d=>`<path d="${d}" stroke="var(--road2)" stroke-width="3" fill="none"/>`).join('');
+  const mx = (a[0]+b[0])/2 + (opts.bend ?? 40), my = (a[1]+b[1])/2;
+  const route = opts.noRoute ? '' : `<path d="M ${a[0]} ${a[1]} Q ${mx} ${my} ${b[0]} ${b[1]}" stroke="var(--ink)" stroke-opacity=".25" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M ${a[0]} ${a[1]} Q ${mx} ${my} ${b[0]} ${b[1]}" stroke="var(--accent)" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  const pin = (p, label, square) => { const lw = label.length*6.4+16, lx = p[0]+14+lw > w-8 ? p[0]-14-lw : p[0]+14; return `
+    <g>${square ? `<rect x="${p[0]-8}" y="${p[1]-8}" width="16" height="16" rx="3" fill="var(--ink)"/><rect x="${p[0]-3}" y="${p[1]-3}" width="6" height="6" fill="var(--glass-solid)"/>`
+      : `<circle cx="${p[0]}" cy="${p[1]}" r="9" fill="var(--ink)"/><circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--glass-solid)"/>`}
+    <g class="pinlbl"><rect x="${lx}" y="${p[1]-12}" width="${lw}" height="24" rx="12"/><text x="${lx+8}" y="${p[1]+4}">${label}</text></g></g>`; };
+  const cars = (opts.cars||[]).map(([x,y,rot])=>`<g transform="translate(${x} ${y}) rotate(${rot})"><rect x="-6" y="-10" width="12" height="20" rx="4" fill="var(--glass-solid)" stroke="var(--ink)" stroke-opacity=".5"/><rect x="-4" y="-5" width="8" height="5" rx="1" fill="var(--ink)" opacity=".5"/></g>`).join('');
+  const labels = (opts.labels||[]).map(([t,x,y])=>`<text class="maplbl" x="${x}" y="${y}">${t}</text>`).join('');
+  return `<svg class="map" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <rect width="${w}" height="${h}" fill="var(--land)"/>${blocks.join('')}${parks}${water}${minor}${r}${labels}${cars}${route}
+    ${opts.noRoute ? pin(a,'Yaba') : pin(a,'Yaba') + pin(b,'Lekki Phase 1',true)}</svg>`;
+}
+
+/* ---------- screen parts ---------- */
+const status = () => `<div class="status"><span>9:41</span><span class="isl"></span><span>5G ▮▮▮</span></div>`;
+const steps = n => `<div class="steps">${[1,2,3,4].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`;
+const head = (t, s, back=true) => `<div class="sh-head">${back?`<span class="back">${ic('back')}</span>`:''}<div><div class="title">${t}</div>${s?`<div class="sub">${s}</div>`:''}</div></div>`;
+const routeBox = () => `<div class="route">
+  <div class="rrow"><span class="dot"></span><div><small>Pickup</small><b>Yaba, Herbert Macaulay Way</b></div></div>
+  <div class="rrow"><span class="sq"></span><div><small>Destination</small><b>Lekki Phase 1, Admiralty Way</b></div></div>
+  <span class="swap" aria-label="Swap pickup and destination">${ic('swap',16)}</span></div>`;
+
+const V = [
+  {k:'basic', n:'Basic', seats:4, ft:'Affordable everyday rides', p:'₦5,900'},
+  {k:'priority', n:'Priority', seats:4, ft:'Guaranteed driver, top-rated', p:'₦7,400'},
+  {k:'premium', n:'Premium', seats:4, ft:'Newer car, AC, extra legroom', p:'₦11,800'},
+  {k:'xl', n:'XL', seats:6, ft:'Fully booked for 6:00 AM', p:'₦9,600', off:true},
+];
+
+const screens = {
+  trip: (t) => `<div class="sheet ${t==='c'?'':''}"><div class="grab"></div>
+    ${steps(1)}${head('Where to?', null, false)}
+    ${routeBox()}
+    <div class="seg"><span>${ic('bolt',15)} Now</span><span class="on later">${ic('cal',15)} Schedule</span></div>
+    <div class="lbl">Day</div>
+    <div class="days"><span>Today<b>6</b></span><span>Wed<b>7</b></span><span>Thu<b>8</b></span><span class="on">Fri<b>9</b></span><span>Sat<b>10</b></span><span>Sun<b>11</b></span></div>
+    <div class="lbl">Pickup time</div>
+    <div class="times"><span>5:30 AM</span><span class="on">6:00 AM</span><span>6:30 AM</span><span>7:00 AM</span><span>Other</span></div>
+    <div class="note">${ic('info',16)}<span>Pickup Fri 9 Oct at 6:00 AM. A driver is assigned 30 minutes before.</span></div>
+    <div class="btn">Choose a car</div></div>`,
+
+  vehicle: (t) => t==='b' ? `<div class="sheet"><div class="grab"></div>
+    ${steps(2)}${head('Choose a car','18 km, about 40 min')}
+    <div style="margin:-4px 0 12px"><span class="badge">${ic('cal',13)} Scheduled, Fri 9 Oct, 6:00 AM</span></div>
+    <div class="carousel">${V.slice(0,3).map(v=>`<div class="vcard ${v.k==='priority'?'sel':''}"><div class="img">${carImg(v.k,120)}</div>
+      <div class="nm">${v.n}</div><div class="meta">${v.seats} seats, available</div>
+      <div class="feats">${v.ft.split(', ').map(f=>`<span>${f}</span>`).join('')}</div>
+      <div class="pr">${v.p} <small>est.</small></div></div>`).join('')}</div>
+    <div class="dots-ind"><i></i><i class="on"></i><i></i><i></i></div>
+    <div class="vdetail"><div>Seats<b>4</b></div><div>Wait time<b>Free 5 min</b></div><div>Cancel<b>Free until 5:30</b></div></div>
+    <div class="btn">Continue with Priority</div></div>`
+  : `<div class="sheet ${t==='c'?'tall':''}"><div class="grab"></div>
+    ${steps(2)}${head('Choose a car','18 km, about 40 min')}
+    <div style="margin:-4px 0 12px"><span class="badge">${ic('cal',13)} Scheduled, Fri 9 Oct, 6:00 AM</span></div>
+    <div class="vlist">${V.map(v=>`<div class="veh ${v.k==='priority'?'sel':''} ${v.off?'off':''}"><div class="img">${carImg(v.k)}</div>
+      <div><div class="nm">${v.n} <small>${ic('user',12)}${v.seats}</small></div><div class="ft">${v.ft}</div>${v.off?'':'<div class="avail">Available</div>'}</div>
+      <div class="pr"><b>${v.p}</b><small>${v.off?'':'est.'}</small></div></div>`).join('')}</div>
+    <div class="grow"></div>
+    <div class="btn">Continue with Priority <span class="pill">₦7,400</span></div></div>`,
+
+  passenger: (t) => `<div class="sheet ${t==='c'?'tall':''}"><div class="grab"></div>
+    ${steps(3)}${head("Who's riding?")}
+    <div class="seg" style="margin-top:0"><span>${ic('user',15)} Me</span><span class="on">${ic('users',15)} Someone else</span></div>
+    <div class="booker"><span class="av">TB</span><span>You're booking as <b>Tolu Bakare</b>. The driver will contact Funke.</span></div>
+    <div class="field"><label>Rider's full name</label><div class="in">Funke Bakare</div></div>
+    <div class="field"><label>Rider's phone number</label><div class="in err"><span class="cc">🇳🇬 +234</span>803 456 78</div>
+      <div class="msg">${ic('alert',14)} Enter a 10-digit number after +234</div></div>
+    <div class="field"><label>Note for the driver (optional)</label><div class="in" style="color:var(--muted)">Two bags. Waiting at the gate.</div></div>
+    <div class="toggle"><span>Text Funke the trip details</span><span class="sw-t"></span></div>
+    <div class="grow"></div>
+    <div class="btn" style="opacity:.45">Review booking</div></div>`,
+
+  review: (t) => `<div class="sheet ${t==='c'?'tall':''}" style="--hole:var(--glass-solid)"><div class="grab"></div>
+    ${steps(4)}${head('Check your trip')}
+    <div class="ticket">
+      <div class="tband">${ic('cal',14)} Scheduled, Fri 9 Oct, 6:00 AM</div>
+      <div class="tbody"><div class="troute">
+        <span class="dot"></span><b>Yaba<small>Herbert Macaulay Way</small></b>
+        <span class="vline"></span><span></span>
+        <span class="sq"></span><b>Lekki Phase 1<small>Admiralty Way</small></b></div></div>
+      <div class="perf"></div>
+      <dl class="trows">
+        <dt>Car</dt><dd>Priority<small>4 seats</small></dd>
+        <dt>Riding</dt><dd>Funke Bakare<small>+234 803 456 7812</small></dd>
+        <dt>Booked by</dt><dd>Tolu Bakare (you)</dd>
+        <dt>Payment</dt><dd>Cash</dd>
+      </dl>
+      <div class="tfare"><small>Estimated fare<br>Final price after the trip</small><b>₦7,400</b></div>
+    </div>
+    <div class="edits"><span>${ic('edit',13)} Trip</span><span>${ic('edit',13)} Car</span><span>${ic('edit',13)} Rider</span></div>
+    <div class="grow"></div>
+    <div class="btn">Book ride for Funke</div></div>`,
+
+  confirmed: (t) => `<div class="sheet ${t==='c'?'tall':''}"><div class="grab"></div>
+    <div class="okc">${ic('check',30,2.6)}</div>
+    <div class="title">Booked for Funke</div>
+    <div class="sub" style="font-size:14px;margin-top:6px">Funke will get a text with the trip details. Her driver is assigned by 5:30 AM on Fri 9 Oct.</div>
+    <div class="ref"><div><small>Booking reference</small><b>FLT-7K3Q2</b></div><span class="copy">${ic('copy',16)}</span></div>
+    <div class="tl">
+      <span class="d done"></span><div><b>Booked</b><small>Today, 9:41 PM</small></div>
+      <span class="bar"></span><span></span>
+      <span class="d"></span><div><b>Driver assigned</b><small>By 5:30 AM, Fri 9 Oct</small></div>
+      <span class="bar"></span><span></span>
+      <span class="d"></span><div><b>Pickup at Yaba</b><small>6:00 AM, Fri 9 Oct</small></div>
+    </div>
+    <div class="grow"></div>
+    <div class="btn">Done</div><div class="btn ghost">Book another ride</div></div>`,
+
+  empty: (t) => `<div class="sheet"><div class="grab"></div>
+    ${head('Choose a car','Now, from Yaba')}
+    <div class="empty">
+      <div class="ill">${carImg('basic',110)}</div>
+      <div class="title" style="font-size:20px">No cars near Yaba right now</div>
+      <div class="sub" style="font-size:14px;margin-top:6px">Every car nearby is on a trip. Schedule this ride for later, or check again in a minute.</div>
+    </div>
+    <div class="btn">${ic('cal',18)} Schedule for later</div><div class="btn ghost">Check again</div></div>`,
+};
+
+const captions = {
+  trip:['Trip','Pickup, destination, and Now or Schedule. Scheduling opens a day strip and time chips; the purple tells you it is a future ride.'],
+  vehicle:['Choose a car','Price, seats, features and availability per car. The selected car stands out; unavailable ones (like XL here, fully booked for 6:00 AM) are dimmed with a reason.'],
+  passenger:["Who's riding",'Booking for someone else, showing a validation error on the phone number. The button stays disabled until it is fixed.'],
+  review:['Review ticket','The trip as a ticket: clear "Riding" and "Booked by" lines, scheduled band, estimated fare, quick edit links.'],
+  confirmed:['Booked','Booking reference and what happens next. For a ride now this shows "Finding a driver" then the driver card.'],
+  empty:['No cars (ride now)','The empty state offers a next step instead of a dead end.'],
+};
+
+const mapsFor = {
+  trip:{a:[78,150],b:[262,265],lagoonY:215}, vehicle:{a:[70,70],b:[270,105],lagoonY:96,bend:10},
+  passenger:{a:[70,70],b:[270,105],lagoonY:96,bend:10}, review:{a:[70,70],b:[270,105],lagoonY:96,bend:10},
+  confirmed:{a:[70,90],b:[270,130],lagoonY:110,bend:10}, empty:{a:[150,260],b:[0,0],noRoute:true,cars:[]},
+};
+const mapsForC = { trip:{a:[70,95],b:[270,140],lagoonY:120,bend:10}, empty:{a:[150,110],b:[0,0],noRoute:true} };
+
+function phone(t, key){
+  const m = (t==='c' && mapsForC[key]) || mapsFor[key];
+  const fabs = key==='trip' ? `<span class="fab l">${ic('menu')}</span><span class="fab r">${ic('locate')}</span>` : '';
+  return `<div class="phone"><div class="screen">${mapSvg(360,740,m.a,m.b,{...m, labels:[['YABA',40,60],['IKOYI',220,40],['LAGOS LAGOON',150,(m.lagoonY||200)+20],['VICTORIA ISLAND',40,(m.lagoonY||200)+90]]})}${status()}${fabs}${screens[key](t)}</div></div>`;
+}
+
+/* ---------- desktop (option A layout, themed) ---------- */
+function desktop(t){
+  return `<div class="desk">${mapSvg(1280,780,[560,300],[930,520],{lagoonY:420,bend:60,cars:[[600,250,30],[720,360,-40],[880,300,80],[650,560,10]],labels:[['YABA',520,250],['IKOYI',820,330],['LAGOS LAGOON',620,470],['LEKKI PHASE 1',960,600]]})}
+    <div class="nav"><span class="logo"><i></i>Folti</span><a class="on">Ride</a><a>My trips</a><a>Help</a><span class="me"><span class="av">TB</span>Tolu</span></div>
+    <div class="panel">${steps(2)}${head('Choose a car','18 km, about 40 min')}
+      <div class="mini"><div>From<b>Yaba</b></div><div>To<b>Lekki Phase 1</b></div></div>
+      <div style="margin:0 0 12px"><span class="badge">${ic('cal',13)} Scheduled, Fri 9 Oct, 6:00 AM</span></div>
+      <div class="vlist">${V.map(v=>`<div class="veh ${v.k==='priority'?'sel':''} ${v.off?'off':''}"><div class="img">${carImg(v.k)}</div>
+        <div><div class="nm">${v.n} <small>${ic('user',12)}${v.seats}</small></div><div class="ft">${v.ft}</div>${v.off?'':'<div class="avail">Available</div>'}</div>
+        <div class="pr"><b>${v.p}</b><small>${v.off?'':'est.'}</small></div></div>`).join('')}</div>
+      <div class="grow"></div><div class="btn">Continue with Priority <span class="pill">₦7,400</span></div></div>
+    <div class="side" style="--hole:var(--land)"><div class="ticket">
+      <div class="tband">${ic('cal',14)} Scheduled, Fri 9 Oct, 6:00 AM</div>
+      <div class="tbody"><div class="troute"><span class="dot"></span><b>Yaba<small>Herbert Macaulay Way</small></b><span class="vline"></span><span></span><span class="sq"></span><b>Lekki Phase 1<small>Admiralty Way</small></b></div></div>
+      <div class="perf"></div>
+      <dl class="trows"><dt>Car</dt><dd>Priority</dd><dt>Riding</dt><dd>Not chosen yet</dd><dt>Booked by</dt><dd>Tolu Bakare (you)</dd></dl>
+      <div class="tfare"><small>Estimated fare</small><b>₦7,400</b></div></div></div>
+  </div>`;
+}
+
+/* ---------- options ---------- */
+const OPTS = {
+  a:{ name:'A. Danfo, golden hour', tag:'Recommended',
+     blurb:'Frosted glass sheet floating over a warm, sunlit Lagos map. Danfo-bus yellow is the only loud colour; dusk purple marks scheduled rides. Vehicles as a vertical list. The trip ticket is the standout moment.',
+     from:['Dune Dweller: glass cards over a full-bleed image, pin markers','Smart Home glass: one accent for selected, big numbers','Orthodontist: day-picker strip','iDraft: dark selected card vs light cards'],
+     fonts:'Bricolage Grotesque (headings, prices) + Instrument Sans (UI)',
+     sw:[['Danfo','#F2C230'],['Ink','#1F1B16'],['Sand','#EADFCC'],['Glass','#FFFCF6'],['Dusk','#4C4FA3'],['Go','#2E9466'],['Stop','#C2412D']]},
+  b:{ name:'B. Lagos after dark', tag:'Moody',
+     blurb:'Night-mode map with dark smoked glass. Yellow becomes the selected card itself, the ticket flips to cream paper. Vehicles as a swipeable carousel of big cards with features as chips. Wider display font for a techier feel.',
+     from:['Smart Home glass: dark translucent panels over a photo','Elisa / Lucas Reis: cinematic dark with one warm accent'],
+     fonts:'Unbounded (headings, prices) + Onest (UI)',
+     sw:[['Danfo','#F2C230'],['Night','#191B26'],['Smoke','#1C1E2B'],['Paper','#F6F0E2'],['Dusk','#9C9FF5'],['Go','#56C795']]},
+  c:{ name:'C. Monochrome, map peek', tag:'Fast and plain',
+     blurb:'No floating glass. The map is a short peek at the top and each step is a full, solid white page below it, like a checkout. Black and white cards with yellow used as a highlighter on prices. Most accessible and quickest to build.',
+     from:['iDraft: pure black-and-white cards, no gradients','Alex Graham: stark, high-contrast type'],
+     fonts:'Schibsted Grotesk (one family, heavy headings)',
+     sw:[['Ink','#0E0E0E'],['White','#FFFFFF'],['Fog','#F4F4F2'],['Highlighter','#F2C230'],['Dusk','#3B44C6'],['Go','#1F8A57']]},
+};
+
+let cur = 'a';
+function render(){
+  document.getElementById('tabs').innerHTML = Object.entries(OPTS).map(([k,o])=>`<button role="tab" aria-selected="${k===cur}" data-k="${k}">${o.name}</button>`).join('');
+  const o = OPTS[cur];
+  document.getElementById('info').innerHTML = `<div><h2>${o.name} <span style="font:600 12px var(--body);background:#F2C230;color:#1F1B16;padding:3px 8px;border-radius:999px;vertical-align:middle">${o.tag}</span></h2><p style="margin-top:8px">${o.blurb}</p>
+    <div class="swatches">${o.sw.map(([n,h])=>`<span class="sw"><i style="background:${h}"></i>${n} ${h}</span>`).join('')}</div></div>
+    <div><b>Borrowed from your inspo</b><ul>${o.from.map(f=>`<li>${f}</li>`).join('')}</ul><p style="margin-top:8px"><b>Type:</b> ${o.fonts}</p></div>`;
+  document.getElementById('rail').innerHTML = Object.keys(screens).map(k=>`<figure class="shot theme-${cur}">${phone(cur,k)}<figcaption><b>${captions[k][0]}.</b> ${captions[k][1]}</figcaption></figure>`).join('');
+  const holder = document.getElementById('deskholder');
+  holder.className = 'desk-holder theme-' + cur;
+  holder.innerHTML = desktop(cur);
+  fitDesk();
+  document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{cur=b.dataset.k; render();});
+}
+function fitDesk(){
+  const h = document.getElementById('deskholder'), d = h.querySelector('.desk');
+  if(!d) return; const s = Math.min(1, h.clientWidth/1280);
+  d.style.transform = `scale(${s})`; h.style.height = (780*s)+'px';
+}
+window.addEventListener('resize', fitDesk);
+render();
+</script>
+</body>
+</html>
