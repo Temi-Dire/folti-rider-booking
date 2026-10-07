@@ -56,6 +56,10 @@ body {
 
 :focus-visible { outline: 2px solid var(--color-danfo); outline-offset: 2px; }
 
+/* Tailwind 4 resets buttons to the default cursor; every clickable control gets the pointer. */
+button:not(:disabled), [role="button"], [role="radio"]:not(:disabled), a[href], summary { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
 .glass {
   background: var(--color-glass);
   backdrop-filter: blur(20px) saturate(1.3);
