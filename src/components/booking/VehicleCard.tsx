@@ -32,7 +32,7 @@ export function VehicleCard({ option, selected, scheduledLabel, name, onSelect }
         className="sr-only"
         aria-describedby={`${category.id}-status`}
       />
-      <CarIllustration id={category.id} className="h-[66px] w-[128px]" />
+      <CarIllustration id={category.id} className="h-[56px] w-[108px]" />
       <span className="mt-2 flex items-baseline justify-between gap-2">
         <span className="font-display text-[16px] font-semibold">{category.name}</span>
         <span className={`inline-flex items-center gap-1 text-[12.5px] ${selected ? "text-on-danfo/70" : "text-muted"}`}>
@@ -63,7 +63,7 @@ export function VehicleCard({ option, selected, scheduledLabel, name, onSelect }
           <span className={`ml-1 font-sans text-[12px] font-medium ${selected ? "text-on-danfo/70" : "text-muted"}`}>est.</span>
         </span>
         {surge && (
-          <span title="Busy hours: prices are a little higher" className={`inline-flex items-center gap-0.5 text-[11.5px] ${selected ? "text-on-danfo/70" : "text-muted"}`}>
+          <span title="Busy hours (weekdays 7 to 10 AM, 5 to 8 PM) cost a little more" className={`inline-flex items-center gap-0.5 text-[11.5px] ${selected ? "text-on-danfo/70" : "text-muted"}`}>
             <TrendingUp className="size-3.5" aria-hidden />
             Busy
           </span>

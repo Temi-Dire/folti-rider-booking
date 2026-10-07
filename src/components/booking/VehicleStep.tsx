@@ -19,7 +19,12 @@ export function VehicleStep() {
   const name = useId();
   const pickup = getPlace(draft.pickupId)!;
   const scheduledAt = draft.timing === "scheduled" && draft.scheduledAt ? new Date(draft.scheduledAt) : null;
-  const q = useQuote({ pickupId: draft.pickupId!, destinationId: draft.destinationId!, timing: draft.timing, scheduledAt: draft.scheduledAt });
+  const q = useQuote({
+    pickupId: draft.pickupId!,
+    destinationId: draft.destinationId!,
+    timing: draft.timing,
+    scheduledAt: draft.scheduledAt,
+  });
 
   const options = q.status === "ready" ? q.quote.options : [];
   const available = options.filter((o) => o.available);
@@ -31,13 +36,18 @@ export function VehicleStep() {
   }, [q.status, selected, available, dispatch]);
 
   const back = () => dispatch({ type: "goTo", step: "trip" });
-  const subtitle = q.status === "ready" ? `${formatKm(q.quote.trip.distanceKm)}, about ${formatDuration(q.quote.trip.durationMin)}` : `From ${pickup.name}`;
+  const subtitle =
+    q.status === "ready"
+      ? `${formatKm(q.quote.trip.distanceKm)}, about ${formatDuration(q.quote.trip.durationMin)}`
+      : `From ${pickup.name}`;
   const header = <StepHeader step="vehicle" title="Choose a car" subtitle={subtitle} onBack={back} backLabel="Back to trip" />;
 
   if (q.status === "error") {
     return (
       <StepLayout header={header} footer={<Button onClick={q.retry}>Try again</Button>}>
-        <Notice tone="error" role="alert">{q.message}</Notice>
+        <Notice tone="error" role="alert">
+          {q.message}
+        </Notice>
       </StepLayout>
     );
   }
@@ -50,13 +60,30 @@ export function VehicleStep() {
     <StepLayout
       header={header}
       footer={
-        <Button
-          disabled={!selected}
-          onClick={() => dispatch({ type: "goTo", step: "rider" })}
-          trailing={selected ? formatNaira(selected.fare) : undefined}
-        >
-          {selected ? `Continue with ${selected.category.name}` : "Choose a car"}
-        </Button>
+        <>
+          {/* Details stay pinned above the button; only the car list scrolls. */}
+          {selected && (
+            <dl className="grid grid-cols-3 gap-1.5 text-[12px]">
+              <Detail label="Seats" value={`${selected.category.seats} people`} />
+              {scheduledAt ? (
+                <Detail label="Pickup" value={formatTime(scheduledAt)} />
+              ) : (
+                <Detail label="Pickup in" value={`${selected.etaMin} min`} />
+              )}
+              <Detail
+                label="Free cancel"
+                value={scheduledAt ? `Until ${formatTime(new Date(scheduledAt.getTime() - 60 * 60_000))}` : "For 2 min"}
+              />
+            </dl>
+          )}
+          <Button
+            disabled={!selected}
+            onClick={() => dispatch({ type: "goTo", step: "rider" })}
+            trailing={selected ? formatNaira(selected.fare) : undefined}
+          >
+            {selected ? `Continue with ${selected.category.name}` : "Choose a car"}
+          </Button>
+        </>
       }
     >
       <div className="mb-3">
@@ -92,24 +119,6 @@ export function VehicleStep() {
           </div>
         </fieldset>
       )}
-
-      {selected && (
-        <dl className="mt-4 grid grid-cols-3 gap-1.5 text-[12px]">
-          <Detail label="Seats" value={`${selected.category.seats} people`} />
-          {scheduledAt ? (
-            <Detail label="Pickup" value={formatTime(scheduledAt)} />
-          ) : (
-            <Detail label="Pickup in" value={`${selected.etaMin} min`} />
-          )}
-          <Detail
-            label="Free cancel"
-            value={scheduledAt ? `Until ${formatTime(new Date(scheduledAt.getTime() - 60 * 60_000))}` : "For 2 min"}
-          />
-        </dl>
-      )}
-      {selected?.surge && (
-        <p className="mt-3 text-[12.5px] text-muted">Busy hours (7 to 10 AM, 5 to 8 PM on weekdays) cost a little more.</p>
-      )}
     </StepLayout>
   );
 }
@@ -123,7 +132,17 @@ function Detail({ label, value }: { label: string; value: string }) {
   );
 }
 
-function NoCars({ pickupName, scheduled, header, onRetry }: { pickupName: string; scheduled: boolean; header: ReactNode; onRetry: () => void }) {
+function NoCars({
+  pickupName,
+  scheduled,
+  header,
+  onRetry,
+}: {
+  pickupName: string;
+  scheduled: boolean;
+  header: ReactNode;
+  onRetry: () => void;
+}) {
   const { dispatch } = useBooking();
   return (
     <StepLayout
