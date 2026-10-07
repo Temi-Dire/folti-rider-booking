@@ -13,7 +13,7 @@ export function TripsList({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col animate-sheet-in">
-      <div className="mb-4 flex items-center gap-3">
+      <div className="mb-4 flex shrink-0 items-center gap-3">
         <button type="button" onClick={onClose} aria-label="Close trips" className="grid size-10 place-items-center rounded-full bg-chip hover:bg-white/15">
           <ChevronLeft className="size-5" aria-hidden />
         </button>

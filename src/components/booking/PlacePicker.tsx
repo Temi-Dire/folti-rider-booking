@@ -48,7 +48,7 @@ export function PlacePicker({ field, otherId, onPick, onClose }: Props) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col animate-sheet-in">
-      <div className="mb-3 flex items-center gap-3">
+      <div className="mb-3 flex shrink-0 items-center gap-3">
         <button
           type="button"
           onClick={onClose}
@@ -60,7 +60,7 @@ export function PlacePicker({ field, otherId, onPick, onClose }: Props) {
         <h2 className="font-display text-[18px] font-semibold">{field === "pickup" ? "Pickup point" : "Where to?"}</h2>
       </div>
 
-      <label className="flex h-12 items-center gap-2.5 rounded-2xl border border-line bg-field px-3.5 focus-within:border-ink">
+      <label className="flex h-12 shrink-0 items-center gap-2.5 rounded-2xl border border-line bg-field px-3.5 focus-within:border-ink">
         <Search className="size-4.5 text-muted" aria-hidden />
         <span className="sr-only">Search Lagos places</span>
         <input
