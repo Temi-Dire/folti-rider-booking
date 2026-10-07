@@ -1,5 +1,7 @@
 # Folti Rider: booking experience
 
+**Live:** https://folti-rider-booking.vercel.app
+
 A mobile-first web app for booking a ride in Lagos: pick a pickup and destination, ride now or schedule for later, choose a car, book for yourself or someone else, review, and confirm.
 
 Everything behind the screens (cars, prices, availability, drivers) is simulated in the browser. There is no backend, no paid service and no API key.
