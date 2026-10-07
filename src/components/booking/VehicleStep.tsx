@@ -58,7 +58,15 @@ export function VehicleStep() {
 
   return (
     <StepLayout
-      header={header}
+      header={
+        <>
+          {header}
+          {/* Pinned with the header so it stays visible while the cars scroll. */}
+          <div className="mb-3">
+            <TimingBadge scheduledLabel={scheduledAt ? formatWhen(scheduledAt) : null} />
+          </div>
+        </>
+      }
       footer={
         <>
           {/* Details stay pinned above the button; only the car list scrolls. */}
@@ -86,10 +94,6 @@ export function VehicleStep() {
         </>
       }
     >
-      <div className="mb-3">
-        <TimingBadge scheduledLabel={scheduledAt ? formatWhen(scheduledAt) : null} />
-      </div>
-
       <div aria-live="polite" className="sr-only">
         {q.status === "loading" ? `Finding cars near ${pickup.name}` : `${available.length} cars available`}
       </div>
