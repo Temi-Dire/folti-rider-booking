@@ -86,8 +86,15 @@ src/
 - **Scheduled rides look different everywhere.** A purple "Scheduled" band or badge appears on the car list, ticket, confirmation and trip history. Ride-now uses green.
 - **Booker vs rider is explicit.** The rider step says "You're booking as Tolu Bakare". The ticket has separate **Riding** and **Booked by** lines, with the rider's name highlighted. The confirmation title says "Booked for Funke".
 - **Prices are estimates.** Fare = base + per km + per minute, times a car multiplier and a busy-hours surcharge (weekdays 7 to 10 AM, 5 to 8 PM), rounded to ₦50. Distance is straight line × 1.35 to account for Lagos roads.
+- **The map stays in reach.** On phones, tap or swipe down the sheet's handle to minimise it to a small bar and see the whole map; it opens again on the next step. On tablets the panel floats on the left instead of covering the full width.
 - **The first available car is pre-selected,** so a rider in a hurry can continue in one tap.
 - **Payment is shown but not processed:** Cash (default) or a demo card.
+
+## Design process
+
+Before building, I mocked up three visual directions as static screens: **A** "Danfo, golden hour" (warm, light glass), **B** "Lagos after dark" (night map, smoked glass, swipeable cars) and **C** "Monochrome, map peek" (plain black and white). They're in [`design/index.html`](design/index.html); open it in a browser and switch between them with the tabs. **B** was chosen and built.
+
+The yellow comes from Lagos danfo buses and is kept for what the rider picks or presses. Purple marks everything scheduled.
 
 ## Assumptions
 

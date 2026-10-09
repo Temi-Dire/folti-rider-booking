@@ -116,7 +116,7 @@ export function BookingApp() {
       <section
         ref={panelRef}
         aria-label="Book a ride"
-        className="glass absolute inset-x-2 bottom-2 z-10 flex max-h-[min(82dvh,calc(100dvh-84px))] flex-col rounded-[28px] px-4 pt-2.5 pb-[max(16px,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 lg:top-[88px] lg:right-auto lg:bottom-auto lg:left-6 lg:max-h-[calc(100dvh-112px)] lg:w-[420px] lg:px-5 lg:pt-5 lg:pb-5"
+        className="glass absolute inset-x-2 bottom-2 z-10 md:right-auto md:bottom-4 md:left-4 md:w-[440px] flex max-h-[min(82dvh,calc(100dvh-84px))] flex-col rounded-[28px] px-4 pt-2.5 pb-[max(16px,env(safe-area-inset-bottom))] shadow-2xl shadow-black/50 lg:top-[88px] lg:right-auto lg:bottom-auto lg:left-6 lg:max-h-[calc(100dvh-112px)] lg:w-[420px] lg:px-5 lg:pt-5 lg:pb-5"
       >
         {/* Grab handle: tap or swipe down to minimise, tap or swipe up to open. Phones only. */}
         <button
